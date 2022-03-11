@@ -145,17 +145,20 @@ VALUES
 ('CT06',1,150000,155000,'ORD9','SP006')
 GO
 ---YÊU CÂU 2: TRUY VẤN NÂNG CAO
----câu 1 : liệt kê 3 mặt hàng được khách hàng ưa chuộng nhất 
+---câu 1 : liệt kê 3 mặt hàng được khách hàng ưa chuộng nhất (nhung)
 SELECT*FROM PRODUCT WHERE MaSP in(SELECT TOP 3 MaSP FROM ORDER_DETAILS GROUP BY MaSP,soluongmua ORDER BY SUM(soluongmua) DESC)
 
----Câu 2: Liệt kê thông tin kiểu thanh toán được dùng nhiều nhất 
+---Câu 2: Liệt kê thông tin kiểu thanh toán được dùng nhiều nhất (nhung)
 SELECT*FROM PAYMENT WHERE MaTT in( SELECT TOP 1 MaTT FROM ORDERS GROUP BY MaTT ORDER BY COUNT(MaTT) DESC)
 
 
 ---Yêu cầu 3: VIEW
---Câu 1 xem tất cả đơn đặt hàng của KH có họ là nguyen(quý)
-CREATE VIEW all_ORDER AS SELECT*FROM ORDERS WHERE MaKH in (SELECT MaKH FROM CUSTOMER WHERE hoten like 'nguyen')
-SELECT*FROM all_ORDER
+--câu 1: tạo một khung nhìn có tên là V_MUAHANG để lấy thông tin của người mua hàng có đơn đặt hàng  và địa chỉ là "đà nẵng"(quý)
+CREATE VIEW DC_MUAHANG
+AS
+SELECT c.hoten,o.MaKH,c.diachi FROM ORDERS AS o JOIN CUSTOMER AS c ON c.MaKH = o.MaKH WHERE c.diachi='da nang'
+
+SELECT*FROM  DC_MUAHANG
 
 --câu 2: tạo một khung nhìn có tên là V_PTTT để lấy ra thông tin khách hàng có phương thức thanh toán là "MoMo" và trạng thái đang "chờ xử lý" (mỹ)
 CREATE VIEW V_PTTT
