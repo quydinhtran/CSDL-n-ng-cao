@@ -223,6 +223,8 @@ ROLLBACK TRANSACTION;
 END;
 
 SELECT * FROM PRODUCT
+
+SELECT * FROM PRODUCT
 -- 1: Tạo trigger để kiểm tra khi thêm một hóa đơn mới,(NHUNG)
 -- kiểm tra xem số lượng mua nhỏ hơn so với số lượng trong bảng sản phẩm hay không, nếu nhỏ hơn thì
 -- giảm số lượng sản phẩm trong kho
